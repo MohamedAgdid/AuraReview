@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        <div class="card shadow-lg mx-auto" style="max-width: 800px;">
+            <div class="card-header bg-{{ color }} text-white text-center">
+                <h1><i class="bi bi-emoji-smile"></i> Analysis Result</h1>
+            </div>
+            <div class="card-body p-4">
+                <div class="text-center mb-4">
+                    <div class="emotion-display display-1">{{ emotion }}</div>
+                    <h2 class="text-{{ color }} mt-3">This review is <strong>{{ sentiment }}</strong></h2>
+                </div>
+                
+                <div class="mb-4">
+                    <h4>Review Text:</h4>
+                    <div class="alert alert-light fs-5">{{ review }}</div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-info text-white">
+                                <i class="bi bi-bar-chart"></i> Confidence Levels
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <span>Positive Confidence:</span>
+                                    <div class="progress" style="height: 25px;">
+                                        <div class="progress-bar bg-success" 
+                                             role="progressbar" 
+                                             style="width: {{ conf_percent['Positive'] }}%;">
+                                            {{ conf_percent['Positive'] }}% 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span>Negative Confidence:</span>
+                                    <div class="progress" style="height: 25px;">
+                                        <div class="progress-bar bg-danger" 
+                                             role="progressbar" 
+                                             style="width: {{ conf_percent['Negative'] }}%;">
+                                            {{ conf_percent['Negative'] }}%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <div class="card h-100">
+                            <div class="card-header bg-secondary text-white">
+                                <i class="bi bi-lightbulb"></i> Insights
+                            </div>
+                            <div class="card-body">
+                                {% if sentiment == "Positive" %}
+                                <p class="text-success">
+                                    <i class="bi bi-check-circle"></i> This review indicates customer satisfaction
+                                </p>
+                                <p>Key positive aspects:</p>
+                                <ul>
+                                    <li>Happy with product quality</li>
+                                    <li>Good customer experience</li>
+                                </ul>
+                                {% else %}
+                                <p class="text-danger">
+                                    <i class="bi bi-exclamation-circle"></i> This review requires attention
+                                </p>
+                                <p>Potential improvement areas:</p>
+                                <ul>
+                                    <li>Product issues</li>
+                                    <li>Customer service concerns</li>
+                                </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                    <a href="/" class="btn btn-primary btn-lg">
+                        <i class="bi bi-arrow-repeat"></i> Analyze Another Review
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
